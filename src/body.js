@@ -297,6 +297,7 @@ var Body = Backgrid.Body = Backbone.View.extend({
         collection.fullCollection.sort();
         collection.trigger("backgrid:sorted", column, direction, collection);
       } else {
+          collection.reset();
           if(collection.fullCollection) {
               collection.fullCollection.reset();
           }
