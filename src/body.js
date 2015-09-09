@@ -297,9 +297,15 @@ var Body = Backgrid.Body = Backbone.View.extend({
         collection.fullCollection.sort();
         collection.trigger("backgrid:sorted", column, direction, collection);
       } else {
-          collection.reset();
+          //reset the fullCollection as we start from scratch
           if(collection.fullCollection) {
               collection.fullCollection.reset();
+          }
+          //start from the first page again
+          collection.state.currentPage = collection.state.firstPage;
+          //clear the next links cache
+          for(var i = collection.state.firstPage + 1; collection.links[i] != undefined; i++) {
+              collection.links[i] = undefined;
           }
           collection.fetch({reset: true, success: function () {
               collection.trigger("backgrid:sorted", column, direction, collection);
